@@ -5,11 +5,13 @@ import {
   AlertDescription,
   AlertTitle,
 } from "@/components/ui/alert"
-
+import TodoList from "@/components/TodoList";
+import AddTask from "@/components/AddTask";
+import { getAllTodos } from "@/api/api";
 
 export default async function Home() {
 
-  const tasks = []
+  const tasks = await getAllTodos()
   console.log(tasks)
 
   return (

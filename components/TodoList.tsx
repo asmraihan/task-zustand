@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/table"
 import { InterfaceTask } from "@/types/tasks"
 import React from "react"
-// import TaskRow from "./TaskRow"
+import TaskRow from "./TaskRow"
 
 interface TodoListProps {
   tasks: InterfaceTask[]
