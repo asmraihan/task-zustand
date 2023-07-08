@@ -8,6 +8,7 @@ export const getAllTodos = async (): Promise<InterfaceTask[]> => {
     return todos
 }
 
+
 export const addTodo = async (todo: InterfaceTask): Promise<InterfaceTask> => {
     const res = await fetch (`${baseUrl}/todos`,{
         method: 'POST',
@@ -20,7 +21,6 @@ export const addTodo = async (todo: InterfaceTask): Promise<InterfaceTask> => {
     return newTodo
 }
 
-
 export const editTodo = async (todo: InterfaceTask): Promise<InterfaceTask> => {
     const res = await fetch (`${baseUrl}/todos/${todo.id}`,{
         method: 'PUT',
@@ -32,3 +32,12 @@ export const editTodo = async (todo: InterfaceTask): Promise<InterfaceTask> => {
     const updatedTodo = await res.json()
     return updatedTodo
 }
+
+
+export const deleteTodo = async (id: string): Promise<void> => { 
+    await fetch (`${baseUrl}/todos/${id}`,{
+        method: 'DELETE',
+    })
+}
+
+

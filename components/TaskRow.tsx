@@ -60,7 +60,17 @@ import { toast } from './ui/use-toast';
       setOpen(false);
     };
   
-
+    const handleDeleteTask = async (id: string) => {
+      await deleteTodo(id);
+      toast({
+        variant: "destructive",
+        title: "Task successfully deleted.",
+      })
+      const updatedTasks = tasks.filter((t) => t.id !== id);
+      await setTasks(updatedTasks);
+      router.refresh();
+    };
+  
     return (
       <TableRow key={task.id}>
         <TableCell className="font-medium">{task.id}</TableCell>
