@@ -15,8 +15,11 @@ type State = {
 };
 
 export const useStore = create<State>((set) => ({
+  // initial state
   tasks: [],
+
   newTaskValue: '',
+  // actions
   setNewTaskValue: (value) => set({ newTaskValue: value }),
   addTask: async (task) => {
     await addTodo(task);

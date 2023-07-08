@@ -38,8 +38,11 @@ import { toast } from './ui/use-toast';
   }
   const TaskRow: React.FC<TaskRowProps> = ({ task }) => {
     const router = useRouter();
+
     const [editTaskValue, setEditTaskValue] = useState<string>(task.text);
     const [open, setOpen] = useState(false);
+    const [openDelete, setOpenDelete] = useState(false);
+        // access the store
     const [tasks, setTasks] = useStore((state) => [state.tasks, state.setTasks]);
   
     const handleSubmitEditTodo = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -55,18 +58,21 @@ import { toast } from './ui/use-toast';
       const updatedTasks = tasks.map((t) =>
         t.id === task.id ? { ...t, text: editTaskValue } : t
       );
+      // update the store
       await setTasks(updatedTasks);
       router.refresh();
       setOpen(false);
     };
   
     const handleDeleteTask = async (id: string) => {
+      // delete task
       await deleteTodo(id);
       toast({
         variant: "destructive",
         title: "Task successfully deleted.",
       })
       const updatedTasks = tasks.filter((t) => t.id !== id);
+      // update the store
       await setTasks(updatedTasks);
       router.refresh();
     };

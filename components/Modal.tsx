@@ -27,24 +27,31 @@ interface ModalProps {
 const Modal: React.FC<ModalProps> = ({ children }) => {
   const { toast } = useToast()
   const router = useRouter();
+  // access the store
   const [newTaskValue, setNewTaskValue, addTask] = useStore((state) => [
     state.newTaskValue,
     state.setNewTaskValue,
     state.addTask,
   ]);
+
   const [open, setOpen] = React.useState(false);
 
+  // handle function for adding new todo
   const handleSubmitNewTodo = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    //add new task
     await addTask({
       id: uuidv4(),
       text: newTaskValue,
     });
+    // show toast notification
     toast({
       title: "Task added successfully",
 
     })
+    // refresh the page
     router.refresh();
+    // close the modal
     setOpen(false);
   };
 

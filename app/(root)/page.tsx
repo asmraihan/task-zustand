@@ -10,7 +10,7 @@ import AddTask from "@/components/AddTask";
 import { getAllTodos } from "@/api/api";
 
 export default async function Home() {
-
+  // get all todos from the api
   const tasks = await getAllTodos()
   console.log(tasks)
 

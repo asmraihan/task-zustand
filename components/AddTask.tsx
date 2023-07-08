@@ -6,7 +6,6 @@ const AddTask = () => {
   return (
     <div className="my-4">
     <Modal >
-   
     </Modal>
     </div>
   )
