@@ -8,3 +8,14 @@ export const getAllTodos = async (): Promise<InterfaceTask[]> => {
     return todos
 }
 
+export const addTodo = async (todo: InterfaceTask): Promise<InterfaceTask> => {
+    const res = await fetch (`${baseUrl}/todos`,{
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify(todo)
+    })
+    const newTodo = await res.json()
+    return newTodo
+}
