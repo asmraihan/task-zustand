@@ -83,6 +83,7 @@ const Modal: React.FC<ModalProps> = ({ children }) => {
                 id="name"
                 value={newTaskValue}
                 autoComplete="off"
+                placeholder="Type Name here" 
                 onChange={(e) => setNewTaskValue(e.target.value)}
                 className="col-span-3"
               />
