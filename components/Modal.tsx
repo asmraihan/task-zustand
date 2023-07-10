@@ -47,6 +47,7 @@ const Modal: React.FC<ModalProps> = ({ children }) => {
       id: uuidv4(),
       text: newTaskValue,
       description: newTaskDescription,
+      status: "To Do"
     });
     // show toast notification
     toast({

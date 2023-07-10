@@ -5,8 +5,7 @@ import Modal from "./Modal";
 const AddTask = () => {
   return (
     <div className="my-4">
-    <Modal >
-    </Modal>
+      <Modal> </Modal>
     </div>
   )
 }

@@ -54,13 +54,13 @@ const TaskRow: React.FC<TaskRowProps> = ({ task, index }) => {
   const [editTaskDescription, setEditTaskDescription] = useState<string>(task.description);
   const [editTaskStatus, setEditTaskStatus] = useState<string>(task.status);
 
-  console.log(editTaskStatus)
+  // console.log(editTaskStatus)
   const [open, setOpen] = useState(false);
-  const [openDelete, setOpenDelete] = useState(false);
 
   // access the store
   const [tasks, setTasks] = useStore((state) => [state.tasks, state.setTasks]);
 
+  // handle function for editing todo
   const handleSubmitEditTodo = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await editTodo({
@@ -81,6 +81,7 @@ const TaskRow: React.FC<TaskRowProps> = ({ task, index }) => {
     setOpen(false);
   };
 
+  // handle function for deleting todo
   const handleDeleteTask = async (id: string) => {
     // delete task
     await deleteTodo(id);

@@ -12,7 +12,7 @@ import { getAllTodos } from "@/api/api";
 export default async function Home() {
   // get all todos from the api
   const tasks = await getAllTodos()
-  console.log(tasks)
+  // console.log(tasks)
 
   return (
     <main className="p-4 max-w-4xl mx-auto h-full flex flex-col justify-center">
