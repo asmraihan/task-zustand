@@ -100,10 +100,10 @@ const TaskRow: React.FC<TaskRowProps> = ({ task, index }) => {
   return (
     <TableRow key={task.id}>
       <TableCell className="font-medium">{index}</TableCell>
-      <TableCell className="">{task.text}</TableCell>
+      <TableCell className="font-medium">{task.text}</TableCell>
       <TableCell className="w-full">{task.description}</TableCell>
-      <TableCell className="">{task.status}</TableCell>
-      <TableCell className="text-right flex justify-center items-center gap-2">
+      <TableCell className={`whitespace-nowrap ${task.status === "Completed" ? 'bg-green-200 inset-10 rounded-lg' : 'bg-gray-100' }`}>{task.status}</TableCell>
+      <TableCell className="text-right flex justify-center items-center gap-2 mx-4">
         {/* edit btn modal */}
 
         <Dialog open={open} onOpenChange={setOpen}>
