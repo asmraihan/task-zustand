@@ -50,12 +50,12 @@ const Modal: React.FC<ModalProps> = ({ children }) => {
       status: "To Do"
     });
     // show toast notification
-    toast({
-      title: "Task added successfully",
-
-    })
+   
     // refresh the page
     router.refresh();
+    toast({
+      title: "Task added successfully",
+    })
     // close the modal
     setOpen(false);
   };

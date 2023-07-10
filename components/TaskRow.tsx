@@ -69,15 +69,16 @@ const TaskRow: React.FC<TaskRowProps> = ({ task, index }) => {
       description: editTaskDescription,
       status: editTaskStatus
     })
-    toast({
-      title: "Task updated successfully",
-    })
+
     const updatedTasks = tasks.map((t) =>
       t.id === task.id ? { ...t, text: editTaskValue, description: editTaskDescription, status: editTaskStatus } : t
     );
     // update the store
     await setTasks(updatedTasks);
     router.refresh();
+    toast({
+      title: "Task updated successfully",
+    })
     setOpen(false);
   };
 
@@ -85,14 +86,15 @@ const TaskRow: React.FC<TaskRowProps> = ({ task, index }) => {
   const handleDeleteTask = async (id: string) => {
     // delete task
     await deleteTodo(id);
-    toast({
-      variant: "destructive",
-      title: "Task successfully deleted.",
-    })
+
     const updatedTasks = tasks.filter((t) => t.id !== id);
     // update the store
     await setTasks(updatedTasks);
     router.refresh();
+    toast({
+      variant: "destructive",
+      title: "Task successfully deleted.",
+    })
   };
 
   return (
@@ -139,23 +141,23 @@ const TaskRow: React.FC<TaskRowProps> = ({ task, index }) => {
                     className="col-span-3"
                     placeholder="Type Description here." />
                 </div>
-               <div className='space-y-2 ml-2'>
-               <Label  htmlFor="Status">
+                <div className='space-y-2 ml-2'>
+                  <Label htmlFor="Status">
                     Status
                   </Label>
-               <Select onValueChange={setEditTaskStatus} defaultValue={editTaskStatus}>
-              
-                  <SelectTrigger >
-                    <SelectValue placeholder="Task Status" />
-                  </SelectTrigger>
-                
-                  <SelectContent >
-                    <SelectItem value="To Do">To Do</SelectItem>
-                    <SelectItem value="In Progress">In Progress</SelectItem>
-                    <SelectItem value="Completed">Completed</SelectItem>
-                  </SelectContent>
-                </Select>
-               </div>
+                  <Select onValueChange={setEditTaskStatus} defaultValue={editTaskStatus}>
+
+                    <SelectTrigger >
+                      <SelectValue placeholder="Task Status" />
+                    </SelectTrigger>
+
+                    <SelectContent >
+                      <SelectItem value="To Do">To Do</SelectItem>
+                      <SelectItem value="In Progress">In Progress</SelectItem>
+                      <SelectItem value="Completed">Completed</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
               <DialogFooter>
                 <Button type="submit">Save task</Button>
