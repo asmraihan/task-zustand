@@ -25,6 +25,7 @@ return (
     <TableHead className="w-[100px]">#</TableHead>
     <TableHead>Task</TableHead>
     <TableHead>Description</TableHead>
+    <TableHead>Status</TableHead>
     <TableHead>Action</TableHead>
   </TableRow>
 </TableHeader>

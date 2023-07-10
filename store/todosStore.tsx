@@ -5,6 +5,7 @@ type Task = {
   id: string;
   text: string;
   description: string;
+  status: string;
 };
 
 type State = {
@@ -41,6 +42,7 @@ export const useStore = create<State>((set) => ({
       id: task.id,
       text: task.text,
       description: task.description,
+      status: task.status
     })));
     set({ tasks });
   },
