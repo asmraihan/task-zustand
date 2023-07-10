@@ -1,4 +1,5 @@
 export interface InterfaceTask {
     id: string,
-    text: string
+    text: string,
+    description: string
 }

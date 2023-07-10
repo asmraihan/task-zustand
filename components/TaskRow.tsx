@@ -1,86 +1,94 @@
 'use client'
 import {
-    TableCell,
-    TableRow,
-  } from '@/components/ui/table';
-  import { InterfaceTask } from '@/types/tasks';
-  import { Edit, Trash2 } from 'lucide-react';
-  import React, { useState } from 'react';
-  import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-    AlertDialogTrigger,
-  } from '@/components/ui/alert-dialog';
-  import { Button } from './ui/button';
-  import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-  } from './ui/dialog';
-  import { Input } from './ui/input';
-  import { Label } from './ui/label';
-  import { useRouter } from 'next/navigation';
-  import { deleteTodo, editTodo } from '@/api/api';
-  import { useStore } from '@/store/todosStore'; 
+  TableCell,
+  TableRow,
+} from '@/components/ui/table';
+import { InterfaceTask } from '@/types/tasks';
+import { Edit, Trash2 } from 'lucide-react';
+import React, { useState } from 'react';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
+import { Button } from './ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from './ui/dialog';
+import { Input } from './ui/input';
+import { Label } from './ui/label';
+import { useRouter } from 'next/navigation';
+import { deleteTodo, editTodo } from '@/api/api';
+import { useStore } from '@/store/todosStore'; 
 import { toast } from './ui/use-toast';
-  interface TaskRowProps {
-    task: InterfaceTask;
-  }
-  const TaskRow: React.FC<TaskRowProps> = ({ task }) => {
-    const router = useRouter();
+import { Textarea } from './ui/textarea';
 
-    const [editTaskValue, setEditTaskValue] = useState<string>(task.text);
-    const [open, setOpen] = useState(false);
-    const [openDelete, setOpenDelete] = useState(false);
-        // access the store
-    const [tasks, setTasks] = useStore((state) => [state.tasks, state.setTasks]);
+interface TaskRowProps {
+  task: InterfaceTask;
+  index: number;
+}
+
+const TaskRow: React.FC<TaskRowProps> = ({ task, index }) => {
+  const router = useRouter();
+
+  const [editTaskValue, setEditTaskValue] = useState<string>(task.text);
+  const [editTaskDescription, setEditTaskDescription] = useState<string>(task.description);
   
-    const handleSubmitEditTodo = async (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      await editTodo({
-        id: task.id,
-        text: editTaskValue,
+  const [open, setOpen] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
+  
+  // access the store
+  const [tasks, setTasks] = useStore((state) => [state.tasks, state.setTasks]);
+
+  const handleSubmitEditTodo = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    await editTodo({
+      id: task.id,
+      text: editTaskValue,
+      description: editTaskDescription
     })
     toast({
       title: "Task updated successfully",
-
     })
-      const updatedTasks = tasks.map((t) =>
-        t.id === task.id ? { ...t, text: editTaskValue } : t
-      );
-      // update the store
-      await setTasks(updatedTasks);
-      router.refresh();
-      setOpen(false);
-    };
-  
-    const handleDeleteTask = async (id: string) => {
-      // delete task
-      await deleteTodo(id);
-      toast({
-        variant: "destructive",
-        title: "Task successfully deleted.",
-      })
-      const updatedTasks = tasks.filter((t) => t.id !== id);
-      // update the store
-      await setTasks(updatedTasks);
-      router.refresh();
-    };
-  
+    const updatedTasks = tasks.map((t) =>
+      t.id === task.id ? { ...t, text: editTaskValue, description: editTaskDescription } : t
+    );
+    // update the store
+    await setTasks(updatedTasks);
+    router.refresh();
+    setOpen(false);
+  };
+
+  const handleDeleteTask = async (id: string) => {
+    // delete task
+    await deleteTodo(id);
+    toast({
+      variant: "destructive",
+      title: "Task successfully deleted.",
+    })
+    const updatedTasks = tasks.filter((t) => t.id !== id);
+    // update the store
+    await setTasks(updatedTasks);
+    router.refresh();
+  };
+
     return (
       <TableRow key={task.id}>
-        <TableCell className="font-medium">{task.id}</TableCell>
-        <TableCell className="w-full">{task.text}</TableCell>
+        <TableCell className="font-medium">{index}</TableCell>
+        <TableCell className="">{task.text}</TableCell>
+        <TableCell className="w-full">{task.description}</TableCell>
         <TableCell className="text-right flex justify-center items-center gap-2">
           {/* edit btn modal */}
   
@@ -108,6 +116,16 @@ import { toast } from './ui/use-toast';
                       onChange={(e) => setEditTaskValue(e.target.value)}
                       className="col-span-3"
                     />
+                     <Label htmlFor="name" className="text-right">
+                Description
+              </Label>
+              <Textarea  
+               id="description"
+               value={editTaskDescription}
+               autoComplete="off"
+               onChange={(e) => setEditTaskDescription(e.target.value)}
+              className="col-span-3" 
+              placeholder="Type Description here." />
                   </div>
                 </div>
                 <DialogFooter>

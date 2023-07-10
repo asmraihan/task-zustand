@@ -24,14 +24,14 @@ return (
   <TableRow>
     <TableHead className="w-[100px]">#</TableHead>
     <TableHead>Task</TableHead>
+    <TableHead>Description</TableHead>
     <TableHead>Action</TableHead>
   </TableRow>
 </TableHeader>
 <TableBody>
   {
-    tasks.map((task) => <TaskRow key={task.id} task={task}></TaskRow> )
+    tasks.map((task, index) => <TaskRow key={task.id} task={task} index={index + 1}></TaskRow> )
   }
-
 </TableBody>
 </Table>
 )

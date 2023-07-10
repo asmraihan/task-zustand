@@ -19,6 +19,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useStore } from '@/store/todosStore'; 
 import { Toaster } from './ui/toaster'; 
 import { useToast } from './ui/use-toast';
+import { Textarea } from './ui/textarea';
 
 interface ModalProps {
   children: React.ReactNode;
@@ -28,9 +29,11 @@ const Modal: React.FC<ModalProps> = ({ children }) => {
   const { toast } = useToast()
   const router = useRouter();
   // access the store
-  const [newTaskValue, setNewTaskValue, addTask] = useStore((state) => [
+  const [newTaskValue, setNewTaskValue, newTaskDescription, setNewTaskDescription, addTask] = useStore((state) => [
     state.newTaskValue,
     state.setNewTaskValue,
+    state.newTaskDescription,
+    state.setNewTaskDescription,
     state.addTask,
   ]);
 
@@ -43,6 +46,7 @@ const Modal: React.FC<ModalProps> = ({ children }) => {
     await addTask({
       id: uuidv4(),
       text: newTaskValue,
+      description: newTaskDescription,
     });
     // show toast notification
     toast({
@@ -80,6 +84,14 @@ const Modal: React.FC<ModalProps> = ({ children }) => {
                 autoComplete="off"
                 onChange={(e) => setNewTaskValue(e.target.value)}
                 className="col-span-3"
+              />
+              <Label htmlFor="name" className="text-right">
+                Description
+              </Label>
+              <Textarea  
+                className="col-span-3" 
+                placeholder="Type description here." 
+                onChange={(e) => setNewTaskDescription(e.target.value)}
               />
             </div>
           </div>
